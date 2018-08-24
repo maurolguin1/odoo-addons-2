@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- tree view -->
+        <record model="ir.ui.view" id="log_view">
+            <field name="name">PRODUCT UPLOAD: logging tree view</field>
+            <field name="model">log</field>
+            <field name="arch" type="xml">
+                <tree string="log">
+                    <field name="updated_products"/>
+                    <field name="created_products"/>
+                    <field name="errors"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- form view -->
+        <record model="ir.ui.view" id="log_form">
+            <field name="name">PRODUCT UPLOAD: form upload view</field>
+            <field name="model">log</field>
+            <field name="arch" type="xml">
+                <form string="Product upload Form View">
+                    <field name="state" invisible="1"/>
+
+                    <group states="load" col="1">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+
+                                <field name="data" filename="name"/>
+
+                            </div>
+                            <div class="col-sm-8">
+                                <p>To import/update products in the system
+                                    create a
+                                    worksheet with three columns:
+                                </p>
+                                <ul>
+                                    <li>Product Code</li>
+                                    <li>List price without tax</li>
+                                    <li>Cost price without tax</li>
+                                </ul>
+                                <p>
+                                    You can have several sheets in the
+                                    spreadsheet
+                                    where
+                                    each
+                                    one corresponds to a vendor.
+                                    Each sheet must have the vendor's reference
+                                    as its
+                                    name.
+                                </p>
+                                <p>
+                                    When hitting save the system checks all the
+                                    file.
+                                    If there are any error it is shown pointing
+                                    the
+                                    worksheet
+                                    ofending row.
+                                    The products must exist and the prices must
+                                    be
+                                    numbers.
+                                </p>
+                                <p>Only when there are no errors all the prices
+                                    are
+                                    updated.
+                                </p>
+
+                            </div>
+                        </div>
+
+
+                    </group>
+                    <group states="error">
+                        <field name="error_ids" nolabel="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="action_log" model="ir.actions.act_window">
+            <field name="name">Upload Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem id="menu_log"
+                  name="Upload Products"
+                  parent="stock.menu_stock_inventory_control"
+                  groups="stock.group_stock_manager,base.group_erp_manager"
+                  sequence="16"
+                  action="action_log"/>
+
+    </data>
+</openerp>
