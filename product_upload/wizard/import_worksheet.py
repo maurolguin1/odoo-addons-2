@@ -8,8 +8,8 @@ import openpyxl
 import datetime
 
 
-class UploadPrices(models.TransientModel):
-    _name = "product_upload.upload_product"
+class ImportWorksheet(models.TransientModel):
+    _name = "product_upload.import_worksheet"
 
     data = fields.Binary(
         'File',
@@ -80,26 +80,31 @@ class UploadPrices(models.TransientModel):
 
     @api.multi
     def import_file(self):
-        data = base64.decodestring(self.data)
-        (fileno, fp_name) = tempfile.mkstemp('.xlsx', 'openerp_')
+        for rec in self:
+            import wdb;wdb.set_trace()
+            data = base64.decodestring(rec.data)
+            (fileno, fp_name) = tempfile.mkstemp('.xlsx', 'openerp_')
 
-        # escribir la planilla en un temporario
-        openfile = open(fp_name, "w")
-        openfile.write(data)
-        openfile.close()
+            # escribir la planilla en un temporario
+            with open(fp_name, 'w') as ws:
+                ws.write(data)
 
-        # leer la planilla del temporario en solo lectura
-        wb = openpyxl.load_workbook(filename=fp_name, read_only=True,
-                                    data_only=True)
+            # leer la planilla del temporario en solo lectura
+            wb = openpyxl.load_workbook(filename=fp_name, read_only=True,
+                                        data_only=True)
 
-        partner_obj = self.env['res.partner']
+            partner_obj = self.env['res.partner']
 
-        # cada hoja de la planilla es un vendor
-        vendors = wb.sheetnames
-        for vendor in vendors:
-            partner = partner_obj.search([('ref', '=', vendor)])
-            if not partner:
-                raise UserError(_('Vendor %s not found.') % vendor)
-            data = self.read_data(wb[vendor])
-            self.check_data(data, vendor)
-            self.process_data(data, vendor)
+            # cada hoja de la planilla es un vendor
+            vendors = wb.sheetnames
+            for vendor in vendors:
+                partner = partner_obj.search([('ref', '=', vendor)])
+                if not partner:
+                    self.add_error(_('Vendor %s not found.') % vendor, rec)
+
+                data = self.read_data(wb[vendor])
+                self.check_data(data, vendor)
+                self.process_data(data, vendor)
+
+    def add_error(self):
+        pass

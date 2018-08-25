@@ -25,7 +25,7 @@ class TestProductUploadProduct(common.TransactionCase):
     """
     def setUp(self):
         super(TestProductUploadProduct, self).setUp()
-        self.log_obj = self.env['log']
+        self.log_obj = self.env['product_upload.log']
 
     def test_01_(self):
         self.assertEqual(1, 1)

@@ -5,7 +5,7 @@
         <!-- tree view -->
         <record model="ir.ui.view" id="log_view">
             <field name="name">PRODUCT UPLOAD: logging tree view</field>
-            <field name="model">log</field>
+            <field name="model">product_upload.log</field>
             <field name="arch" type="xml">
                 <tree string="log">
                     <field name="updated_products"/>
@@ -21,17 +21,19 @@
         <!-- form view -->
         <record model="ir.ui.view" id="log_form">
             <field name="name">PRODUCT UPLOAD: form upload view</field>
-            <field name="model">log</field>
+            <field name="model">product_upload.log</field>
             <field name="arch" type="xml">
                 <form string="Product upload Form View">
                     <field name="state" invisible="1"/>
-
+                    <header>
+                        <button class="oe_highlight" name="import_worksheet" string="Import worksheet" type="object"/>
+                        <button class="oe_highlight" name="process_file" string="Process worksheet" type="object"/>
+                    </header>
                     <group states="load" col="1">
 
                         <div class="row">
                             <div class="col-sm-4">
-
-                                <field name="data" filename="name"/>
+                                <p>Select the product worksheet and hit Save</p>
 
                             </div>
                             <div class="col-sm-8">
@@ -86,7 +88,7 @@
         <record id="action_log" model="ir.actions.act_window">
             <field name="name">Upload Products</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">log</field>
+            <field name="res_model">product_upload.log</field>
             <field name="view_mode">tree,form</field>
             <field name="target">current</field>
         </record>

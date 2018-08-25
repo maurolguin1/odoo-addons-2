@@ -29,8 +29,9 @@
         'stock'
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'wizard/import_worksheet_view.xml',
         'views/log_view.xml',
-        'security/ir.model.access.csv'
     ],
     'test': [
     ],
