@@ -36,6 +36,7 @@
     'test': [
     ],
     'demo': [
+        'data/partner_data.xml'
     ],
     'installable': True,
     'application': False,

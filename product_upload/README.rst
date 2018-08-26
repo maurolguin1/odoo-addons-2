@@ -9,7 +9,7 @@ Carga / Actualizacion de productos por planilla
 Este modulo crea/actualiza productos desde una planilla excel. Cada hoja de la
 planilla agrupa productos de un determinado proveedor y la referencia del
 proveedor (que se encuentra en la ficha del proveedor bajo su nombre) debe ser
-el nombre de la planilla.
+el nombre de la hoja.
 
 Installation
 ============

@@ -5,7 +5,11 @@ from openerp import models, fields, api
 
 class Error(models.Model):
     _description = "Errors from product uploads"
-    _name = 'error'
+    _name = 'product_upload.error'
 
     log_id = fields.Integer(
+    )
+
+    name = fields.Char(
+
     )
